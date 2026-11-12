@@ -1,0 +1,1259 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Neden Messi?</title>
+<meta name="description" content="Messi ile Ronaldo’nun kariyerlerini sezon sezon karşılaştıran taraftar sayfası. Kulüp, sezon ve turnuva seçerek kendi karşılaştırmanı yap.">
+<meta name="theme-color" content="#0D1828">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="tr_TR">
+<meta property="og:title" content="Neden Messi?">
+<meta property="og:description" content="Messi ile Ronaldo’nun kariyerlerini sezon sezon karşılaştıran taraftar sayfası. Kulüp, sezon ve turnuva seçerek kendi karşılaştırmanı yap.">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%237CBBEA'/%3E%3Ctext x='32' y='43' font-family='Arial Black,Arial,sans-serif' font-size='29' font-weight='900' text-anchor='middle' fill='%230D1828'%3E10%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&display=swap">
+<style>
+:root{
+  /* Layout: stadyum skor tabelası açılışı → TV "maç istatistikleri" panelleri; tek sütun, 1080px */
+  --bg:#F1F4F8; --surface:#FFFFFF; --sunken:#E6ECF3; --ink:#0F1C2C; --muted:#56667A; --line:#D6DFE9;
+  --messi:#3384C6; --messi-ink:#1C5C94; --messi-soft:#DCEAF7;
+  --ronaldo:#BE3343; --ronaldo-ink:#8F1F2D; --ronaldo-soft:#F6DFE2;
+  --neutral:#7A8AA0; --neutral-ink:#4D5D72;
+  --gold:#A47B12; --gold-soft:#F4EACB;
+  --on-accent:#FFFFFF;
+  --nav-bg:rgba(241,244,248,.92); --shadow:rgba(15,28,44,.10);
+  --board:#0D1828; --board-2:#132235; --board-edge:#22344B; --board-ink:#EEF3F9; --board-soft:#B9C7D8; --board-muted:#8197B0; --board-line:rgba(238,243,249,.07);
+  --board-messi:#7CBBEA; --board-ronaldo:#EE7482;
+  --f-display:"Big Shoulders Display","Barlow Condensed","Arial Narrow",Impact,sans-serif;
+  --f-body:"Barlow","Segoe UI",system-ui,-apple-system,sans-serif;
+  --f-label:"Barlow Condensed","Arial Narrow","Segoe UI",sans-serif;
+  --r:12px;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#08111B; --surface:#0F1A28; --sunken:#152335; --ink:#E5ECF4; --muted:#94A5BA; --line:#21324A;
+    --messi:#5FA6E2; --messi-ink:#8DC4F1; --messi-soft:#12304B;
+    --ronaldo:#DB5A69; --ronaldo-ink:#F2939D; --ronaldo-soft:#3B1820;
+    --neutral:#7D8EA5; --neutral-ink:#AEBBCC;
+    --gold:#D9B24E; --gold-soft:#2E2612;
+    --on-accent:#08111B;
+    --nav-bg:rgba(8,17,27,.9); --shadow:rgba(0,0,0,.45);
+    --board:#050C15; --board-2:#0D1828; --board-edge:#1D2E44;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#08111B; --surface:#0F1A28; --sunken:#152335; --ink:#E5ECF4; --muted:#94A5BA; --line:#21324A;
+  --messi:#5FA6E2; --messi-ink:#8DC4F1; --messi-soft:#12304B;
+  --ronaldo:#DB5A69; --ronaldo-ink:#F2939D; --ronaldo-soft:#3B1820;
+  --neutral:#7D8EA5; --neutral-ink:#AEBBCC;
+  --gold:#D9B24E; --gold-soft:#2E2612;
+  --on-accent:#08111B;
+  --nav-bg:rgba(8,17,27,.9); --shadow:rgba(0,0,0,.45);
+  --board:#050C15; --board-2:#0D1828; --board-edge:#1D2E44;
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);background:var(--bg)}
+img{max-width:100%}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+a{color:var(--messi-ink)}
+:focus-visible{outline:2px solid var(--messi-ink);outline-offset:2px}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* tokens for a side's colour */
+.c-m{--c:var(--messi);--ci:var(--messi-ink);--cs:var(--messi-soft)}
+.c-r{--c:var(--ronaldo);--ci:var(--ronaldo-ink);--cs:var(--ronaldo-soft)}
+.c-n{--c:var(--neutral);--ci:var(--neutral-ink);--cs:var(--sunken)}
+
+/* ---------- hero ---------- */
+.hero{background:var(--board);color:var(--board-ink);position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(circle at 50% 100%, transparent 0 199px, var(--board-line) 200px 202px, transparent 203px),
+    linear-gradient(90deg, transparent calc(50% - 1px), var(--board-line) calc(50% - 1px) calc(50% + 1px), transparent calc(50% + 1px));}
+.hero .wrap{position:relative;padding-block:44px 52px;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:40px;align-items:center}
+.kicker{font:600 13px/1.2 var(--f-label);letter-spacing:.16em;text-transform:uppercase;color:var(--board-muted);margin:0}
+.hero h1{font:900 clamp(56px,9vw,108px)/.88 var(--f-display);text-transform:uppercase;margin:14px 0 18px;letter-spacing:.005em;text-wrap:balance}
+.hero h1 span{color:var(--board-messi);display:block}
+.hero .lead{font-size:18px;line-height:1.55;color:var(--board-soft);max-width:46ch;margin:0}
+.cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:999px;font:700 15px/1 var(--f-label);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;border:1.5px solid transparent}
+.btn.primary{background:var(--board-messi);color:var(--board)}
+.btn.ghost{border-color:var(--board-edge);color:var(--board-ink)}
+.btn:hover{filter:brightness(1.08)}
+.stamp{margin:18px 0 0;font:500 13px/1.4 var(--f-label);letter-spacing:.04em;color:var(--board-muted)}
+
+.board{background:var(--board-2);border:1px solid var(--board-edge);border-radius:16px;overflow:hidden;box-shadow:0 24px 60px -30px var(--shadow)}
+.board-top{display:flex;justify-content:space-between;gap:12px;padding:11px 18px;font:600 13px/1 var(--f-label);letter-spacing:.14em;text-transform:uppercase;color:var(--board-muted);border-bottom:1px solid var(--board-edge)}
+.board-top .live{display:inline-flex;align-items:center;gap:7px}
+.board-top .live::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--board-messi)}
+.board-score{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:10px;padding:18px 18px 10px}
+.team{display:flex;align-items:center;gap:12px;font:800 clamp(22px,3.6vw,36px)/1 var(--f-display);text-transform:uppercase;letter-spacing:.02em;min-width:0}
+.team.r{justify-content:flex-end}
+.crest{flex:none;display:inline-grid;place-items:center;width:clamp(36px,5vw,48px);aspect-ratio:1;border-radius:50%;font:800 clamp(16px,2.2vw,21px)/1 var(--f-display);color:var(--board)}
+.crest.m{background:var(--board-messi)} .crest.r{background:var(--board-ronaldo)}
+.score{display:flex;align-items:center;gap:.14em;font:900 clamp(72px,11vw,132px)/.85 var(--f-display);font-variant-numeric:tabular-nums}
+.score .m{color:var(--board-messi)} .score .r{color:var(--board-ronaldo)} .score .sep{color:var(--board-muted);font-size:.5em;transform:translateY(-.08em)}
+.board-cap{text-align:center;font:500 13px/1.4 var(--f-label);letter-spacing:.04em;color:var(--board-muted);padding:0 18px 12px}
+.board-lines{list-style:none;margin:0;padding:0 18px 12px}
+.board-lines li{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:14px;align-items:baseline;padding:9px 0;border-top:1px solid var(--board-edge)}
+.board-lines b{font:800 22px/1 var(--f-display);font-variant-numeric:tabular-nums}
+.board-lines b:first-child{text-align:right;color:var(--board-messi)} .board-lines b:last-child{color:var(--board-ronaldo)}
+.board-lines span{font:600 13px/1 var(--f-label);letter-spacing:.12em;text-transform:uppercase;color:var(--board-soft);text-align:center;min-width:13ch}
+
+/* ---------- nav ---------- */
+.topnav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--nav-bg);border-bottom:1px solid var(--line);-webkit-backdrop-filter:saturate(1.4) blur(10px);backdrop-filter:saturate(1.4) blur(10px)}
+.topnav ul{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;list-style:none;margin:0;padding-block:8px}
+.topnav ul::-webkit-scrollbar{display:none}
+.topnav a{display:block;white-space:nowrap;padding:7px 12px;border-radius:999px;font:600 14px/1 var(--f-label);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-decoration:none}
+.topnav a:hover{color:var(--ink);background:var(--sunken)}
+
+/* ---------- sections ---------- */
+section.block{padding-block:64px 8px;scroll-margin-top:56px}
+.eyebrow{font:600 13px/1 var(--f-label);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:0}
+h2{font:800 clamp(36px,5.6vw,60px)/.95 var(--f-display);text-transform:uppercase;margin:12px 0 14px;letter-spacing:.01em;text-wrap:balance}
+h3{font:700 15px/1.2 var(--f-label);letter-spacing:.12em;text-transform:uppercase;margin:0 0 6px;color:var(--ink)}
+.lede{max-width:65ch;color:var(--muted);font-size:17px;margin:0 0 28px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:16px}
+.stack{display:grid;gap:16px}
+.foot{font-size:13.5px;color:var(--muted);max-width:80ch;margin:14px 0 0}
+.foot p{margin:4px 0}
+
+/* tally */
+.tally{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:16px;padding:18px 20px;margin-bottom:16px}
+.tally .n{font:900 clamp(44px,7vw,72px)/.9 var(--f-display);font-variant-numeric:tabular-nums}
+.tally .who{font:700 14px/1.2 var(--f-label);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.tally .side-l{display:flex;align-items:baseline;gap:12px}
+.tally .side-r{display:flex;align-items:baseline;gap:12px;justify-content:flex-end;text-align:right}
+.tally .mid{text-align:center;font:600 14px/1.3 var(--f-label);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);max-width:22ch}
+.tally .c-m .n{color:var(--messi-ink)} .tally .c-r .n{color:var(--ronaldo-ink)}
+
+/* stat rows (TV style) */
+.ph{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:6px}
+.ph .names{display:flex;gap:14px;font:700 13px/1 var(--f-label);letter-spacing:.1em;text-transform:uppercase}
+.ph .names span:first-child{color:var(--messi-ink)} .ph .names span:last-child{color:var(--ronaldo-ink)}
+.srow{display:grid;grid-template-columns:minmax(4.6ch,auto) minmax(0,1fr) minmax(4.6ch,auto);align-items:center;column-gap:12px;row-gap:7px;padding:11px 0;border-top:1px solid var(--line)}
+.srow:first-child{border-top:0}
+.srow .v{font:800 27px/1 var(--f-display);font-variant-numeric:tabular-nums;color:var(--muted);white-space:nowrap}
+.srow .v em{display:block;font:500 12px/1.2 var(--f-label);font-style:normal;letter-spacing:.04em;margin-top:3px;color:var(--muted)}
+.srow .v.l{text-align:left} .srow .v.rt{text-align:right}
+.srow .v .ap{font-size:.62em;vertical-align:.25em;margin-right:1px}
+.srow .lbl{text-align:center;font:600 14px/1.25 var(--f-label);letter-spacing:.07em;text-transform:uppercase;color:var(--ink)}
+.srow .lbl small{display:block;text-transform:none;letter-spacing:0;color:var(--muted);font:500 12.5px/1.3 var(--f-body);margin-top:3px}
+.srow .lbl sup{color:var(--muted);font-size:.8em}
+.srow.win-l .v.l, .srow.win-r .v.rt{color:var(--ci)}
+.split{grid-column:1/-1;display:flex;gap:2px;height:7px;border-radius:4px;overflow:hidden}
+.split i{display:block;height:100%;background:var(--c);min-width:0;transition:flex-grow .45s ease}
+.srow.win-l .split i:last-child, .srow.win-r .split i:first-child{opacity:.28}
+.srow.neutral .split i{opacity:.45}
+
+/* ---------- age chart ---------- */
+.chart-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}
+.seg{display:inline-flex;background:var(--sunken);border-radius:999px;padding:3px}
+.seg button{border:0;background:transparent;padding:8px 14px;border-radius:999px;font:600 14px/1 var(--f-label);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px var(--shadow)}
+.readout{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:baseline;font:600 15px/1.3 var(--f-label);letter-spacing:.03em;font-variant-numeric:tabular-nums;min-height:22px}
+.readout .ra{font:800 20px/1 var(--f-display);text-transform:uppercase}
+.readout b{font-weight:700}
+.readout .c-m b{color:var(--messi-ink)} .readout .c-r b{color:var(--ronaldo-ink)}
+.readout .diff{color:var(--muted)}
+#ageChart{width:100%;touch-action:pan-y}
+#ageChart svg{display:block;width:100%;height:auto;overflow:visible}
+#ageChart .grid line{stroke:var(--line)}
+#ageChart text{fill:var(--muted);font:500 12px var(--f-label)}
+#ageChart .ln{fill:none;stroke-width:3;stroke-linejoin:round;stroke-linecap:round}
+#ageChart .ln.m{stroke:var(--messi)} #ageChart .ln.r{stroke:var(--ronaldo)}
+#ageChart .end{font:700 15px var(--f-label);letter-spacing:.03em}
+#ageChart .end.m{fill:var(--messi-ink)} #ageChart .end.r{fill:var(--ronaldo-ink)}
+#ageChart .guide{stroke:var(--muted);stroke-dasharray:3 4}
+#ageChart .gd{stroke:var(--surface);stroke-width:2}
+#ageChart .gd.m{fill:var(--messi)} #ageChart .gd.r{fill:var(--ronaldo)}
+#ageChart .lead-band{fill:var(--messi-soft);opacity:.6}
+#ageChart .hit{fill:transparent;cursor:crosshair}
+.verdict-big{font:700 clamp(19px,2.4vw,24px)/1.35 var(--f-body);margin:16px 0 0;max-width:60ch;text-wrap:pretty}
+.verdict-big b{color:var(--messi-ink)}
+
+/* ---------- comparator ---------- */
+.presets{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.chip{border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:8px 14px;border-radius:999px;font:600 14px/1.1 var(--f-label);letter-spacing:.03em;cursor:pointer;text-align:left}
+.chip:hover{border-color:var(--muted)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.sides{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:16px;margin-bottom:16px}
+.side{border-top:4px solid var(--c)}
+.side-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.side-head .dot{width:12px;height:12px;border-radius:50%;background:var(--c)}
+.side-head strong{font:800 24px/1 var(--f-display);text-transform:uppercase;letter-spacing:.02em;color:var(--ci)}
+.side-head .tag{margin-left:auto;font:600 12px/1 var(--f-label);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.fields{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
+.field{display:grid;gap:5px;min-width:0}
+.field.full{grid-column:1/-1}
+.field label{font:600 12.5px/1 var(--f-label);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.selwrap{position:relative}
+.selwrap::after{content:"";position:absolute;right:13px;top:50%;width:7px;height:7px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:translateY(-70%) rotate(45deg);pointer-events:none}
+select{width:100%;min-width:0;font:500 15px/1.2 var(--f-body);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 34px 10px 11px;-webkit-appearance:none;appearance:none;cursor:pointer;text-overflow:ellipsis}
+select:hover{border-color:var(--muted)}
+.res-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;margin-bottom:8px}
+.res-head div{min-width:0}
+.res-head div:last-child{text-align:right}
+.res-head strong{display:block;font:800 22px/1.05 var(--f-display);text-transform:uppercase;color:var(--ci)}
+.res-head span{display:block;font:500 13.5px/1.35 var(--f-label);letter-spacing:.02em;color:var(--muted);margin-top:3px}
+.verdict{font:600 17px/1.45 var(--f-body);margin:14px 0 4px;padding:12px 14px;background:var(--sunken);border-radius:8px}
+.note{font-size:13.5px;color:var(--muted);margin:8px 0 0}
+.barsgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:16px;margin-top:16px}
+.barpanel h3{display:flex;justify-content:space-between;gap:8px}
+.barpanel h3 span{color:var(--ci)}
+.bars{display:flex;align-items:flex-end;gap:3px;height:170px;padding-top:20px;border-bottom:1px solid var(--line)}
+.bar{flex:1 1 0;min-width:0;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:stretch;border:0;background:none;padding:0;cursor:pointer;font:inherit;color:inherit;border-radius:3px}
+.bar b{font:700 11px/1 var(--f-label);color:var(--muted);text-align:center;margin-bottom:4px;font-variant-numeric:tabular-nums}
+.bar i{display:block;background:var(--c);border-radius:3px 3px 0 0;min-height:2px;transition:height .4s ease;opacity:.85}
+.bar:hover i,.bar[aria-pressed="true"] i{opacity:1}
+.bar[aria-pressed="true"] b{color:var(--ink)}
+.bar[aria-pressed="true"] i{box-shadow:0 0 0 2px var(--ink)}
+.bar-axis{display:flex;justify-content:space-between;font:500 12px var(--f-label);color:var(--muted);margin-top:6px}
+.bar-read{margin:10px 0 0;font:600 14.5px/1.35 var(--f-label);letter-spacing:.02em;min-height:20px}
+details{margin-top:16px}
+summary{cursor:pointer;font:600 14px var(--f-label);letter-spacing:.08em;text-transform:uppercase;color:var(--ink);padding:6px 0}
+.tbl-wrap{overflow-x:auto;margin-top:8px}
+table{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
+th,td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+th{font:600 12.5px var(--f-label);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+th:nth-child(-n+2),td:nth-child(-n+2){text-align:left}
+tfoot td{font-weight:700;border-bottom:0}
+.tbls{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:16px}
+.tbls h4{margin:8px 0 0;font:700 13px var(--f-label);letter-spacing:.1em;text-transform:uppercase;color:var(--ci)}
+
+/* ---------- trophies ---------- */
+.cab-row{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr) minmax(0,1fr);gap:14px;align-items:center;padding:13px 0;border-top:1px solid var(--line)}
+.cab-row:first-child{border-top:0}
+.cab-row.head{padding-top:0}
+.cab-row.head span{font:700 13px/1 var(--f-label);letter-spacing:.12em;text-transform:uppercase}
+.cab-row .cat{font:600 15px/1.25 var(--f-label);letter-spacing:.03em}
+.cab-row .cat small{display:block;font:500 12.5px/1.3 var(--f-body);color:var(--muted);letter-spacing:0;margin-top:2px}
+.cab-cell{display:flex;align-items:center;gap:10px;min-width:0}
+.cab-cell .cnt{font:800 26px/1 var(--f-display);min-width:1.4ch;font-variant-numeric:tabular-nums;color:var(--ci)}
+.cab-cell.zero .cnt{color:var(--muted)}
+.pips{display:flex;flex-wrap:wrap;gap:3px}
+.pip{width:7px;height:16px;border-radius:2px;background:var(--c)}
+.cab-row.total{border-top:2px solid var(--ink)}
+.cab-row.total .cat{font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+.cab-row.total .cnt{font-size:34px}
+.cab-row.youth{opacity:.85}
+.trolist{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:16px;margin-top:10px}
+.trolist dl{margin:0}
+.trolist dt{font:700 13px var(--f-label);letter-spacing:.1em;text-transform:uppercase;color:var(--ci);margin-top:10px}
+.trolist dd{margin:2px 0 0;font-size:14.5px;color:var(--ink)}
+
+/* ---------- awards ---------- */
+.bdo{display:grid;grid-template-columns:repeat(18,minmax(0,1fr));gap:4px;margin:6px 0 18px}
+.bdo div{border-radius:7px;padding:9px 2px;text-align:center;display:grid;gap:3px;border:1px solid var(--line);min-width:0}
+.bdo b{font:700 12px/1 var(--f-label);font-variant-numeric:tabular-nums}
+.bdo span{font:600 11.5px/1.1 var(--f-label);letter-spacing:.02em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bdo .m{background:var(--messi-ink);border-color:transparent;color:var(--on-accent)}
+.bdo .r{background:var(--ronaldo-ink);border-color:transparent;color:var(--on-accent)}
+.bdo .x{color:var(--muted)}
+.bdo .none{color:var(--muted);background:repeating-linear-gradient(45deg,var(--sunken) 0 4px,transparent 4px 8px)}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font:500 13px var(--f-label);color:var(--muted)}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:6px;background:var(--c)}
+
+/* ---------- world cup ---------- */
+.wc h3{color:var(--ci);font-size:16px}
+.kv{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px 14px;margin:14px 0 16px}
+.kv div{min-width:0}
+.kv dt{font:600 12.5px/1.2 var(--f-label);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.kv dd{margin:2px 0 0;font:800 40px/1 var(--f-display);color:var(--ci);font-variant-numeric:tabular-nums}
+.kv small{display:block;font:500 12.5px/1.3 var(--f-label);color:var(--muted);margin-top:3px}
+.wc p{margin:0;color:var(--muted);font-size:15px}
+.finals{display:grid;gap:14px}
+.finals .who{font:700 13px var(--f-label);letter-spacing:.1em;text-transform:uppercase;color:var(--ci);margin-bottom:6px}
+.fin{display:flex;flex-wrap:wrap;gap:6px}
+.fin span{padding:5px 11px;border-radius:999px;font:600 13.5px/1.2 var(--f-label);letter-spacing:.02em;border:1px solid var(--line);color:var(--muted)}
+.fin span.w{background:var(--gold-soft);border-color:var(--gold);color:var(--ink)}
+
+/* ---------- game / facts ---------- */
+.prose{max-width:68ch;font-size:17px;margin:0 0 28px}
+.prose p{margin:0 0 12px}
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.fact{padding:20px 20px 18px;border-top:4px solid var(--messi)}
+.fact .num{font:900 clamp(42px,5.4vw,62px)/.95 var(--f-display);color:var(--messi-ink);font-variant-numeric:tabular-nums;letter-spacing:.01em}
+.fact h3{margin:10px 0 4px}
+.fact p{margin:0;color:var(--muted);font-size:15px}
+
+/* ---------- ronaldo ---------- */
+.rl{padding:4px 20px}
+.rl-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:20px;padding:18px 0;border-top:1px solid var(--line)}
+.rl-row:first-child{border-top:0}
+.rl-row .claim h3{margin:0 0 4px}
+.rl-row .claim .num{font:800 30px/1 var(--f-display);color:var(--ronaldo-ink);font-variant-numeric:tabular-nums}
+.rl-row .claim .num span{color:var(--muted);font-size:.7em}
+.rl-row p{margin:0;font-size:15.5px}
+.rl-row p b{font:700 12.5px var(--f-label);letter-spacing:.12em;text-transform:uppercase;color:var(--messi-ink);margin-right:6px}
+.closing{font:700 clamp(22px,3vw,30px)/1.3 var(--f-body);max-width:40ch;margin:28px 0 0;text-wrap:balance}
+
+/* ---------- sources ---------- */
+.src{columns:2 340px;column-gap:32px;padding-left:20px;margin:0;font-size:14.5px}
+.src li{margin:0 0 8px;break-inside:avoid}
+.notes{display:grid;gap:8px;margin-top:22px;font-size:14.5px;color:var(--muted);max-width:80ch}
+.notes p{margin:0}
+footer{margin-top:64px;border-top:1px solid var(--line)}
+footer .wrap{padding-block:24px 40px;font-size:13.5px;color:var(--muted)}
+
+@media (max-width:900px){
+  .hero .wrap{grid-template-columns:1fr;gap:30px}
+  .hero::before{background:radial-gradient(circle at 50% 100%, transparent 0 199px, var(--board-line) 200px 202px, transparent 203px)}
+  .bdo{grid-template-columns:repeat(9,minmax(0,1fr))}
+}
+@media (max-width:620px){
+  .facts{grid-template-columns:1fr}
+  .rl-row{grid-template-columns:1fr;gap:8px}
+  .kv{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .kv dd{font-size:34px}
+  .team{flex-direction:column;gap:6px;font-size:20px}
+  .team.r{flex-direction:column-reverse}
+  .board-lines span{min-width:0;font-size:12px;letter-spacing:.08em}
+  .tally{grid-template-columns:1fr 1fr}
+  .tally .mid{grid-column:1/-1;grid-row:1;max-width:none}
+  .cab-row{grid-template-columns:minmax(0,1fr) minmax(0,.9fr) minmax(0,.9fr);gap:8px}
+  .pips{display:none}
+  .srow .v{font-size:23px}
+}
+@media (max-width:480px){
+  .bdo{grid-template-columns:repeat(6,minmax(0,1fr))}
+  .fields{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+<body>
+
+<div lang="tr">
+
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <p class="kicker">Lionel Messi · Cristiano Ronaldo · 2002–2026</p>
+      <h1>Neden <span>Messi?</span></h1>
+      <p class="lead">Ronaldo daha çok gol attı, çünkü daha uzun oynadı. Messi ise aynı yaşta daha çok gol attı, çok daha fazla asist yaptı, daha çok kupa kaldırdı ve daha çok Ballon d’Or kazandı. Bu sayfa iki kariyeri sezon sezon karşılaştırıyor. Aşağıdaki araçla kendi karşılaştırmanı da yapabilirsin.</p>
+      <div class="cta">
+        <a class="btn primary" href="#karsilastir">Kendin karşılaştır</a>
+        <a class="btn ghost" href="#yas">Aynı yaşta kim önde?</a>
+      </div>
+      <p class="stamp">Veriler: Messi 7 Kasım 2026, Ronaldo 29 Ekim 2026 maçına kadar. İkisi de milli takımı bıraktı.</p>
+    </div>
+
+    <div class="board" role="group" aria-label="Skor tabelası: Ballon d’Or, Messi 8, Ronaldo 5">
+      <div class="board-top"><span>Ballon d’Or</span><span class="live">2008–2025</span></div>
+      <div class="board-score">
+        <div class="team m"><span class="crest m">10</span><span>Messi</span></div>
+        <div class="score" aria-hidden="true"><span class="m">8</span><span class="sep">:</span><span class="r">5</span></div>
+        <div class="team r"><span>Ronaldo</span><span class="crest r">7</span></div>
+      </div>
+      <p class="board-cap">2008–2025 arasında verilen 17 ödülün 13’ü bu ikisine gitti.</p>
+      <ul class="board-lines">
+        <li><b>1</b><span>Dünya Kupası</span><b>0</b></li>
+        <li><b>419</b><span>Asist</span><b>269</b></li>
+        <li><b>0,79</b><span>Maç başına gol</span><b>0,73</b></li>
+        <li><b>45</b><span>Kupa (A takım)</span><b>35</b></li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<nav class="topnav" aria-label="Bölümler">
+  <div class="wrap">
+    <ul>
+      <li><a href="#ozet">Özet</a></li>
+      <li><a href="#yas">Aynı yaş</a></li>
+      <li><a href="#karsilastir">Karşılaştır</a></li>
+      <li><a href="#kupalar">Kupalar</a></li>
+      <li><a href="#oduller">Ödüller</a></li>
+      <li><a href="#dunya-kupasi">Dünya Kupası</a></li>
+      <li><a href="#oyun">Oyun</a></li>
+      <li><a href="#ronaldo">Ronaldo’nun hakkı</a></li>
+      <li><a href="#kaynaklar">Kaynaklar</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+
+<section class="block" id="ozet">
+  <div class="wrap">
+    <p class="eyebrow">Kariyer özeti · A takım, tüm resmî maçlar</p>
+    <h2>Maçın istatistikleri</h2>
+    <p class="lede">Televizyondaki maç istatistikleri gibi: solda Messi, sağda Ronaldo. Önde olanın sayısı renkli. Ronaldo toplam sayılarda, Messi oranlarda, asistte ve kupalarda önde.</p>
+
+    <div class="panel tally" id="tally"></div>
+    <div class="grid2" id="overview"></div>
+    <div class="foot">
+      <p>† Asistler Transfermarkt sayımıdır (Marca ve beIN Sports, 30 Ekim 2026). Opta gibi daha katı sayımlarda ikisinin de asisti daha düşük çıkıyor, fark ise korunuyor.</p>
+      <p>≈ Yaklaşık değer: kaynaklar arasında birkaç gollük farklar var.</p>
+      <p>Şampiyonlar Ligi sayıları UEFA’nın resmî sayımıdır (ön eleme maçları hariç).</p>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="yas">
+  <div class="wrap">
+    <p class="eyebrow">Adil karşılaştırma</p>
+    <h2>Aynı yaşta kim önde?</h2>
+    <p class="lede">Ronaldo, Messi’den 2 yaş 4 ay büyük ve 158 maç fazla oynadı. Toplam golü adil karşılaştırmanın yolu, ikisini aynı yaşta yan yana koymak. Grafik her yaş için o yaşa kadar atılan toplam golü gösteriyor. Üzerinde gezinerek ya da dokunarak bir yaşı seç.</p>
+    <div class="panel">
+      <div class="chart-top">
+        <div class="seg" role="group" aria-label="Gol türü">
+          <button type="button" id="ageAll" aria-pressed="true">Kulüp + milli takım</button>
+          <button type="button" id="ageClub" aria-pressed="false">Sadece kulüp</button>
+        </div>
+        <div class="readout" id="ageRead" aria-live="polite"></div>
+      </div>
+      <div id="ageChart" tabindex="0" aria-label="Yaşa göre toplam gol grafiği. Sol ve sağ ok tuşlarıyla yaş seçebilirsin."></div>
+      <p class="verdict-big" id="ageVerdict"></p>
+    </div>
+    <div class="foot"><p>Yaş, sezonun ortasındaki yaştır: Avrupa sezonlarında 1 Ocak, takvim yılı boyunca süren MLS sezonlarında ve milli takım yıllarında 1 Temmuz.</p></div>
+  </div>
+</section>
+
+<section class="block" id="karsilastir">
+  <div class="wrap">
+    <p class="eyebrow">Karşılaştırma aracı</p>
+    <h2>Kendin karşılaştır</h2>
+    <p class="lede">Oyuncuyu, takımı, sezon aralığını ve turnuvayı seç. Örneğin Messi’nin PSG’deki golleriyle Ronaldo’nun Juventus’taki gollerini karşılaştırabilirsin. İki tarafta aynı oyuncuyu seçip iki dönemini de kıyaslayabilirsin. Araç yalnızca maç ve gol sayılarını kullanır, çünkü sezon bazında asist sayıları kaynaktan kaynağa değişiyor.</p>
+
+    <div class="presets" id="presets" role="group" aria-label="Hazır karşılaştırmalar"></div>
+
+    <div class="sides">
+      <div class="panel side c-m" id="side0">
+        <div class="side-head"><span class="dot"></span><strong id="s0-name">Messi</strong><span class="tag">Sol taraf</span></div>
+        <div class="fields">
+          <div class="field"><label for="s0-player">Oyuncu</label><div class="selwrap"><select id="s0-player"><option value="messi">Lionel Messi</option><option value="ronaldo">Cristiano Ronaldo</option></select></div></div>
+          <div class="field"><label for="s0-team">Takım</label><div class="selwrap"><select id="s0-team"></select></div></div>
+          <div class="field"><label for="s0-from">İlk sezon</label><div class="selwrap"><select id="s0-from"></select></div></div>
+          <div class="field"><label for="s0-to">Son sezon</label><div class="selwrap"><select id="s0-to"></select></div></div>
+          <div class="field full"><label for="s0-comp">Turnuva</label><div class="selwrap"><select id="s0-comp"></select></div></div>
+        </div>
+      </div>
+      <div class="panel side c-r" id="side1">
+        <div class="side-head"><span class="dot"></span><strong id="s1-name">Ronaldo</strong><span class="tag">Sağ taraf</span></div>
+        <div class="fields">
+          <div class="field"><label for="s1-player">Oyuncu</label><div class="selwrap"><select id="s1-player"><option value="messi">Lionel Messi</option><option value="ronaldo">Cristiano Ronaldo</option></select></div></div>
+          <div class="field"><label for="s1-team">Takım</label><div class="selwrap"><select id="s1-team"></select></div></div>
+          <div class="field"><label for="s1-from">İlk sezon</label><div class="selwrap"><select id="s1-from"></select></div></div>
+          <div class="field"><label for="s1-to">Son sezon</label><div class="selwrap"><select id="s1-to"></select></div></div>
+          <div class="field full"><label for="s1-comp">Turnuva</label><div class="selwrap"><select id="s1-comp"></select></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" id="result">
+      <div class="res-head" id="resHead"></div>
+      <div id="resRows"></div>
+      <p class="verdict" id="verdict" aria-live="polite"></p>
+      <div id="resNote"></div>
+    </div>
+
+    <div class="barsgrid" id="barsGrid"></div>
+
+    <details class="panel">
+      <summary>Sezon sezon tabloyu göster</summary>
+      <div class="tbls" id="tbls"></div>
+    </details>
+  </div>
+</section>
+
+<section class="block" id="kupalar">
+  <div class="wrap">
+    <p class="eyebrow">Kupa dolabı</p>
+    <h2>45’e karşı 35</h2>
+    <p class="lede">A takım seviyesinde Messi 45, Ronaldo 35 kupa kaldırdı. Ronaldo yalnızca Şampiyonlar Ligi’nde (5–4), Uluslar Ligi’nde ve Kulüpler Dünya Kupası’nda önde. Dünya Kupası, lig şampiyonlukları ve yerel kupalar Messi’de.</p>
+    <div class="panel" id="cabinet"></div>
+    <details class="panel">
+      <summary>Bütün kupaları yıl yıl göster</summary>
+      <div class="trolist" id="troList"></div>
+    </details>
+  </div>
+</section>
+
+<section class="block" id="oduller">
+  <div class="wrap">
+    <p class="eyebrow">Bireysel ödüller</p>
+    <h2>Ballon d’Or yılları</h2>
+    <p class="lede">2008’den 2025’e kadar her yıl kimin kazandığı. Messi’nin 8 Ballon d’Or’u bir rekor. İkinci sırada Ronaldo’nun 5 ödülü var; ondan sonra gelenlerin 3’er ödülü var.</p>
+    <div class="panel">
+      <div class="bdo" id="bdo"></div>
+      <div class="legend"><span class="c-m"><i></i>Messi (8)</span><span class="c-r"><i></i>Ronaldo (5)</span><span>Gri: başka bir oyuncu · Çizgili: 2020’de verilmedi</span></div>
+    </div>
+    <div class="grid2" style="margin-top:16px">
+      <div class="panel" id="awards"></div>
+      <div class="panel" id="awards2"></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="dunya-kupasi">
+  <div class="wrap">
+    <p class="eyebrow">Dünya Kupası ve milli takım</p>
+    <h2>En büyük sahnede</h2>
+    <p class="lede">İkisi de altı Dünya Kupası’nda oynadı. Kupayı kaldıran, iki kez turnuvanın en iyi oyuncusu seçilen ve tarihte en çok Dünya Kupası maçına çıkan oyuncu Messi.</p>
+    <div class="grid2">
+      <article class="panel wc c-m">
+        <h3>Messi · Arjantin</h3>
+        <dl class="kv">
+          <div><dt>Turnuva</dt><dd>6</dd><small>2006–2026</small></div>
+          <div><dt>Maç</dt><dd>34</dd><small>Tüm zamanların rekoru</small></div>
+          <div><dt>Gol</dt><dd>21</dd><small>Klose’nin 16’sını geçti</small></div>
+          <div><dt>Asist</dt><dd>12</dd><small>Rekor (1966’dan beri)</small></div>
+          <div><dt>Şampiyonluk</dt><dd>1</dd><small>2022</small></div>
+          <div><dt>Altın Top</dt><dd>2</dd><small>2014, 2022</small></div>
+        </dl>
+        <p>2022 finalinde iki gol attı ve penaltı atışlarında da gol buldu. 2026’da 39 yaşında 8 gol ve 4 asistle Arjantin’i yine finale taşıdı. Final uzatmada İspanya’ya 1–0 kaybedildi. Messi o turnuvada Gümüş Top ve Gümüş Ayakkabı kazandı.</p>
+      </article>
+      <article class="panel wc c-r">
+        <h3>Ronaldo · Portekiz</h3>
+        <dl class="kv">
+          <div><dt>Turnuva</dt><dd>6</dd><small>2006–2026</small></div>
+          <div><dt>Gol</dt><dd>11</dd><small>Portekiz rekoru</small></div>
+          <div><dt>Eleme turu golü</dt><dd>1</dd><small>2026, Hırvatistan</small></div>
+          <div><dt>En iyi derece</dt><dd>4.</dd><small>2006</small></div>
+          <div><dt>Şampiyonluk</dt><dd>0</dd><small>—</small></div>
+          <div><dt>Altın Top</dt><dd>0</dd><small>—</small></div>
+        </dl>
+        <p>Altı ayrı Dünya Kupası’nda gol atan ilk oyuncu oldu. 2026’da son 16 turunda İspanya’ya 1–0 yenilerek elendiler. Eleme turlarındaki ilk Dünya Kupası golünü 41 yaşında, 2026’da attı.</p>
+      </article>
+    </div>
+    <div class="grid2" style="margin-top:16px">
+      <div class="panel" id="ntRows"></div>
+      <div class="panel">
+        <h3>Milli takımla büyük finaller</h3>
+        <div class="finals">
+          <div class="c-m">
+            <div class="who">Messi · 9 final, 4 şampiyonluk</div>
+            <div class="fin"><span>2007 Copa América</span><span>2014 Dünya Kupası</span><span>2015 Copa América</span><span>2016 Copa América</span><span class="w">2021 Copa América</span><span class="w">2022 Finalissima</span><span class="w">2022 Dünya Kupası</span><span class="w">2024 Copa América</span><span>2026 Dünya Kupası</span></div>
+          </div>
+          <div class="c-r">
+            <div class="who">Ronaldo · 4 final, 3 şampiyonluk</div>
+            <div class="fin"><span>EURO 2004</span><span class="w">EURO 2016</span><span class="w">Uluslar Ligi 2019</span><span class="w">Uluslar Ligi 2025</span></div>
+          </div>
+          <p class="note">Altın renkli olanlar kazanılan finaller.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="oyun">
+  <div class="wrap">
+    <p class="eyebrow">Rakamların ötesi</p>
+    <h2>Oyunun kendisi</h2>
+    <div class="prose">
+      <p>Ronaldo’nun oyunu golün etrafında kurulu: koşu, şut, kafa vuruşu. Messi ise aynı anda golcü, oyun kurucu ve çalımcı. 2019-20’de La Liga’nın hem gol kralı (25) hem asist kralı (21) oldu. Rakibi tek başına geçip son pası da kendisi verebilen bir oyuncu, takımın bütün hücumunu taşır.</p>
+      <p>Asist farkının (419–269) anlattığı şey bu. Gol + asist toplamında Messi, Ronaldo’dan 158 maç az oynamasına rağmen yaklaşık 100 skor katkısı önde.</p>
+    </div>
+    <div class="facts">
+      <div class="panel fact"><div class="num">91</div><h3>Bir takvim yılında gol</h3><p>2012’de kulüp ve milli takımda. Guinness rekoru.</p></div>
+      <div class="panel fact"><div class="num">73</div><h3>Tek sezonda gol</h3><p>2011-12, Barcelona. Ronaldo’nun en iyi sezonu: 61 gol (2014-15).</p></div>
+      <div class="panel fact"><div class="num">50</div><h3>Tek La Liga sezonunda gol</h3><p>2011-12. Lig rekoru. Ronaldo’nun en iyisi 48.</p></div>
+      <div class="panel fact"><div class="num">474</div><h3>La Liga golü</h3><p>Ligin tüm zamanlar gol rekoru. La Liga’nın asist rekoru da Messi’de.</p></div>
+      <div class="panel fact"><div class="num">672</div><h3>Tek kulüpte gol</h3><p>Barcelona’da 778 maçta. Bir futbolcunun tek kulüp için attığı en çok gol.</p></div>
+      <div class="panel fact"><div class="num">26</div><h3>El Clásico golü</h3><p>Barcelona – Real Madrid maçlarının tüm zamanlar en golcüsü.</p></div>
+      <div class="panel fact"><div class="num">12</div><h3>Dünya Kupası asisti</h3><p>Turnuva rekoru (1966’dan beri tutulan kayıtlarla). 2026’da 39 yaşında 8 gol ve 4 asist yaptı.</p></div>
+      <div class="panel fact"><div class="num">29+19</div><h3>38 yaşında bir sezon</h3><p>MLS 2025: 29 gol, 19 asist. Gol krallığı, MVP ve MLS Cup şampiyonluğu.</p></div>
+      <div class="panel fact"><div class="num">16–9–11</div><h3>Karşı karşıya</h3><p>36 maçta Messi 16 galibiyet, 9 beraberlik, 11 yenilgi. Goller: Messi 22, Ronaldo 21.</p></div>
+    </div>
+    <div class="foot"><p>Karşı karşıya maçlar yaygın derlemelere göredir; son karşılaşma Ocak 2023’teki PSG – Riyad Karması maçıydı.</p></div>
+  </div>
+</section>
+
+<section class="block" id="ronaldo">
+  <div class="wrap">
+    <p class="eyebrow">Hakkını verelim</p>
+    <h2>Ronaldo’nun önde olduğu yerler</h2>
+    <p class="lede">Ronaldo tarihin en büyük golcülerinden biri. Önde olduğu alanlar gerçek. Ama her birinin bir bağlamı var.</p>
+    <div class="panel rl">
+      <div class="rl-row">
+        <div class="claim"><h3>Toplam gol</h3><div class="num">985 <span>– 937</span></div></div>
+        <p><b>Bağlam</b>Ronaldo 2 yaş 4 ay büyük ve 158 maç fazla oynadı. Aynı yaşta karşılaştırınca Messi 19 yaşından bu yana her yaşta önde. Ronaldo’nun toplam üstünlüğü 40 ve 41 yaşlarında attığı gollerden geliyor.</p>
+      </div>
+      <div class="rl-row">
+        <div class="claim"><h3>Penaltı golleri</h3><div class="num">≈161–184 <span>– ≈114</span></div></div>
+        <p><b>Bağlam</b>Penaltı sayıları kaynağa göre değişiyor. Penaltılar çıkarıldığında fark kapanıyor: Messi ≈823, Ronaldo ≈801–824. Messi bunu 158 maç daha az oynayarak yaptı.</p>
+      </div>
+      <div class="rl-row">
+        <div class="claim"><h3>Şampiyonlar Ligi</h3><div class="num">140 gol · 5 kupa <span>– 129 · 4</span></div></div>
+        <p><b>Bağlam</b>Ronaldo’nun en güçlü alanı ve gerçek bir üstünlük. Yine de maç başına gol oranında Messi önde (0,79 – 0,77). Messi, Ronaldo’dan 20 maç az oynadı.</p>
+      </div>
+      <div class="rl-row">
+        <div class="claim"><h3>Milli takım golü</h3><div class="num">146 <span>– 126</span></div></div>
+        <p><b>Bağlam</b>Ronaldo 26 maç fazla oynadı. Messi ise milli takımda 69’a 45 asist yaptı, Dünya Kupası ve iki Copa América kazandı. Gol + asist toplamında Messi önde (195 – 191).</p>
+      </div>
+      <div class="rl-row">
+        <div class="claim"><h3>Kafa golü</h3><div class="num">≈150+ <span>– ≈30</span></div></div>
+        <p><b>Bağlam</b>Ronaldo’nun hava hâkimiyeti eşsiz. Messi’nin silahı ise ayağındaki top: gollerinin büyük çoğunluğu sol ayakla.</p>
+      </div>
+      <div class="rl-row">
+        <div class="claim"><h3>Hat-trick</h3><div class="num">66 <span>– ≈60</span></div></div>
+        <p><b>Bağlam</b>Fark küçük ve büyük kısmı maç sayısından geliyor.</p>
+      </div>
+      <div class="rl-row">
+        <div class="claim"><h3>Dört ülkede lig şampiyonluğu</h3><div class="num">4 ülke <span>– 3</span></div></div>
+        <p><b>Bağlam</b>İngiltere, İspanya, İtalya ve Suudi Arabistan. Etkileyici bir çeşitlilik. Toplam lig şampiyonluğunda ise Messi önde: 13 – 8.</p>
+      </div>
+      <div class="rl-row">
+        <div class="claim"><h3>Uzun ömür</h3><div class="num">41 yaş</div></div>
+        <p><b>Bağlam</b>41 yaşında hâlâ düzenli gol atıyor. Bu disiplin takdiri hak ediyor. Messi de 39 yaşında Dünya Kupası finali oynadı ve MLS gol krallığını üst üste iki kez kazandı.</p>
+      </div>
+    </div>
+    <p class="closing">Ronaldo tarihin en iyi golcülerinden biri. Messi ise tarihin en eksiksiz futbolcusu.</p>
+  </div>
+</section>
+
+<section class="block" id="kaynaklar">
+  <div class="wrap">
+    <p class="eyebrow">Kaynaklar ve yöntem</p>
+    <h2>Rakamlar nereden geliyor?</h2>
+    <ol class="src">
+      <li><a href="https://en.wikipedia.org/wiki/Lionel_Messi" target="_blank" rel="noopener">Wikipedia: Lionel Messi</a>. Kariyer istatistikleri, 7 Kasım 2026 maçı itibarıyla. Kupalar ve ödüller.</li>
+      <li><a href="https://en.wikipedia.org/wiki/Cristiano_Ronaldo" target="_blank" rel="noopener">Wikipedia: Cristiano Ronaldo</a>. Kariyer istatistikleri, 29 Ekim 2026 maçı itibarıyla. Kupalar ve ödüller.</li>
+      <li><a href="https://www.beinsports.com/en-us/soccer/articles/messi-vs-cristiano-ronaldo-who-wins-the-goals-and-assists-battle-2026-10-30" target="_blank" rel="noopener">beIN Sports</a>, 30 Ekim 2026. Transfermarkt asist verileri (Marca aktarımı).</li>
+      <li><a href="https://www.intermiamicf.com/news/leo-messi-adds-another-milestone-by-becoming-first-player-in-mls-history-to-secure-the-golden-boot-in-consecutive-seasons" target="_blank" rel="noopener">Inter Miami CF</a>. 2026 MLS Altın Ayakkabı.</li>
+      <li><a href="https://www.nbcnewyork.com/world-cup/lionel-messi-all-time-goal-record/6514945/" target="_blank" rel="noopener">NBC</a>. Messi’nin Dünya Kupası gol rekoru.</li>
+      <li><a href="https://www.aljazeera.com/sports/2026/6/23/ronaldo-scores-twice-as-portugal-thrash-uzbekistan-5-0-at-world-cup-2026" target="_blank" rel="noopener">Al Jazeera</a>. Ronaldo’nun altıncı Dünya Kupası’nda golü.</li>
+      <li><a href="https://www.aljazeera.com/sports/2026/10/7/lionel-messis-last-game-for-argentina-ends-in-triumph-and-tears" target="_blank" rel="noopener">Al Jazeera</a>. Messi’nin Arjantin formasıyla son maçı.</li>
+      <li><a href="https://www.planetfootball.com/stats-tables/lionel-messi-cristiano-ronaldo-hat-trick-stats-compared-who-scored-most" target="_blank" rel="noopener">Planet Football</a>. Hat-trick karşılaştırması.</li>
+      <li><a href="https://bolavip.com/en/soccer/messi-reaches-70-free-kick-goals-in-his-career-how-many-does-cristiano-ronaldo-have-and-who-holds-the-record" target="_blank" rel="noopener">Bolavip</a>. Serbest vuruş golleri.</li>
+      <li><a href="https://theweek.com/football/90293/lionel-messi-vs-cristiano-ronaldo-career-goals-awards-trophies" target="_blank" rel="noopener">The Week</a>. Penaltı golleri.</li>
+      <li><a href="https://messixronaldo.com/blog/messi-vs-ronaldo-full-career-stats-comparison" target="_blank" rel="noopener">messixronaldo.com</a>. Kafa golleri (taraftar sitesi, yaklaşık).</li>
+    </ol>
+    <div class="notes">
+      <p>Maç ve gol sayıları yalnızca A takım resmî maçlarıdır. Barcelona B ve C ile Sporting B maçları dahil değildir.</p>
+      <p>Karşılaştırma aracındaki sezon tabloları Wikipedia’nın kariyer istatistikleri tablolarından alındı. Bu tablolarda kıtasal kupa sütunu ön eleme maçlarını da sayar. “Diğer” sütunu süper kupaları, Kulüpler Dünya Kupası’nı, Leagues Cup’ı, MLS play-off’larını ve Arap Kulüpler Şampiyonası’nı kapsar.</p>
+      <p>Toplam gol: Messi 937 (Barcelona 672, PSG 32, Inter Miami 107, Arjantin 126). Ronaldo 985 (Sporting 5, Manchester United 145, Real Madrid 450, Juventus 101, Al-Nassr 138, Portekiz 146).</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">Taraftar sayfası. Messi’nin tarafını tutuyor, ama rakamları olduğu gibi gösteriyor.</div>
+</footer>
+
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ===================== DATA ===================== */
+/* Sezon satırı: [kulüp, sezon, lig maç, lig gol, kupa maç, kupa gol, kıtasal maç, kıtasal gol, diğer maç, diğer gol, kıtasal tür]
+   Kaynak: Wikipedia kariyer istatistikleri (Messi 7 Kasım 2026, Ronaldo 29 Ekim 2026). Kupa = ulusal kupa + lig kupası. */
+const P = {
+  messi: {
+    name:"Messi", born:1987.477, nt:"Arjantin",
+    clubs:{bar:"Barcelona", psg:"Paris Saint-Germain", mia:"Inter Miami"},
+    short:{bar:"Barça", psg:"PSG", mia:"Miami"},
+    s:[
+      ["bar","2004-05",7,1,1,0,1,0,0,0,"ucl"],
+      ["bar","2005-06",17,6,2,1,6,1,0,0,"ucl"],
+      ["bar","2006-07",26,14,2,2,5,1,3,0,"ucl"],
+      ["bar","2007-08",28,10,3,0,9,6,0,0,"ucl"],
+      ["bar","2008-09",31,23,8,6,12,9,0,0,"ucl"],
+      ["bar","2009-10",35,34,3,1,11,8,4,4,"ucl"],
+      ["bar","2010-11",33,31,7,7,13,12,2,3,"ucl"],
+      ["bar","2011-12",37,50,7,3,11,14,5,6,"ucl"],
+      ["bar","2012-13",32,46,5,4,11,8,2,2,"ucl"],
+      ["bar","2013-14",31,28,6,5,7,8,2,0,"ucl"],
+      ["bar","2014-15",38,43,6,5,13,10,0,0,"ucl"],
+      ["bar","2015-16",33,26,5,5,7,6,4,4,"ucl"],
+      ["bar","2016-17",34,37,7,5,9,11,2,1,"ucl"],
+      ["bar","2017-18",36,34,6,4,10,6,2,1,"ucl"],
+      ["bar","2018-19",34,36,5,3,10,12,1,0,"ucl"],
+      ["bar","2019-20",33,25,2,2,8,3,1,1,"ucl"],
+      ["bar","2020-21",35,30,5,3,6,5,1,0,"ucl"],
+      ["psg","2021-22",26,6,1,0,7,5,0,0,"ucl"],
+      ["psg","2022-23",32,16,1,0,7,4,1,1,"ucl"],
+      ["mia","2023",6,1,1,0,0,0,7,10,"ccc"],
+      ["mia","2024",19,20,0,0,3,2,3,1,"ccc"],
+      ["mia","2025",28,29,0,0,7,5,14,9,"ccc"],
+      ["mia","2026",31,26,0,0,2,1,3,3,"ccc"]
+    ],
+    /* [yıl, resmî maç, resmî gol, hazırlık maç, hazırlık gol] */
+    n:[[2005,3,0,2,0],[2006,3,1,4,1],[2007,10,4,4,2],[2008,6,1,2,1],[2009,8,1,2,2],[2010,5,0,5,2],[2011,8,2,5,2],[2012,5,5,4,7],[2013,5,3,2,3],[2014,7,4,7,4],[2015,6,1,2,3],[2016,10,8,1,0],[2017,5,4,2,0],[2018,4,1,1,3],[2019,6,1,4,4],[2020,4,1,0,0],[2021,16,9,0,0],[2022,10,8,4,10],[2023,5,3,3,5],[2024,9,4,2,2],[2025,3,2,2,1],[2026,8,8,4,3]]
+  },
+  ronaldo: {
+    name:"Ronaldo", born:1985.096, nt:"Portekiz",
+    clubs:{spo:"Sporting CP", mu:"Manchester United", rma:"Real Madrid", juv:"Juventus", nas:"Al-Nassr"},
+    short:{spo:"Sporting", mu:"M. United", rma:"Real", juv:"Juve", nas:"Al-Nassr"},
+    s:[
+      ["spo","2002-03",25,3,3,2,3,0,0,0,"uefa"],
+      ["mu","2003-04",29,4,6,2,5,0,0,0,"ucl"],
+      ["mu","2004-05",33,5,9,4,8,0,0,0,"ucl"],
+      ["mu","2005-06",33,9,6,2,8,1,0,0,"ucl"],
+      ["mu","2006-07",34,17,8,3,11,3,0,0,"ucl"],
+      ["mu","2007-08",34,31,3,3,11,8,1,0,"ucl"],
+      ["mu","2008-09",33,18,6,3,12,4,2,1,"ucl"],
+      ["rma","2009-10",29,26,0,0,6,7,0,0,"ucl"],
+      ["rma","2010-11",34,40,8,7,12,6,0,0,"ucl"],
+      ["rma","2011-12",38,46,5,3,10,10,2,1,"ucl"],
+      ["rma","2012-13",34,34,7,7,12,12,2,2,"ucl"],
+      ["rma","2013-14",30,31,6,3,11,17,0,0,"ucl"],
+      ["rma","2014-15",35,48,2,1,12,10,5,2,"ucl"],
+      ["rma","2015-16",36,35,0,0,12,16,0,0,"ucl"],
+      ["rma","2016-17",29,25,2,1,13,12,2,4,"ucl"],
+      ["rma","2017-18",27,26,0,0,13,15,4,3,"ucl"],
+      ["juv","2018-19",31,21,2,0,9,6,1,1,"ucl"],
+      ["juv","2019-20",33,31,4,2,8,4,1,0,"ucl"],
+      ["juv","2020-21",33,29,4,2,6,4,1,1,"ucl"],
+      ["juv","2021-22",1,0,0,0,0,0,0,0,"ucl"],
+      ["mu","2021-22",30,18,1,0,7,6,0,0,"ucl"],
+      ["mu","2022-23",10,1,0,0,6,2,0,0,"uel"],
+      ["nas","2022-23",16,14,2,0,0,0,1,0,"afc"],
+      ["nas","2023-24",31,35,4,3,9,6,7,6,"afc"],
+      ["nas","2024-25",30,25,1,0,8,8,2,2,"afc"],
+      ["nas","2025-26",30,28,1,0,4,1,2,1,"afc"],
+      ["nas","2026-27",10,8,0,0,2,1,0,0,"afc"]
+    ],
+    n:[[2003,0,0,2,0],[2004,11,7,5,0],[2005,7,2,4,0],[2006,10,4,4,2],[2007,9,5,1,0],[2008,5,1,3,0],[2009,5,0,2,1],[2010,6,3,5,0],[2011,6,5,2,2],[2012,9,4,4,1],[2013,6,7,3,3],[2014,5,3,4,2],[2015,4,3,1,0],[2016,10,10,3,3],[2017,10,10,1,1],[2018,4,4,3,2],[2019,10,14,0,0],[2020,4,2,2,1],[2021,11,11,3,2],[2022,12,3,0,0],[2023,9,10,0,0],[2024,10,5,2,2],[2025,9,8,0,0],[2026,6,3,2,0]]
+  }
+};
+
+/* Sezon tablosunda olmayan kariyer verileri (kaynaklar sayfanın altında) */
+const EXTRA = {
+  messi:   {ast:419, ntAst:69, fk:71, ht:60, tro:45, bdo:8, wc:1, ntTro:4, ucl:[163,129]},
+  ronaldo: {ast:269, ntAst:45, fk:64, ht:66, tro:35, bdo:5, wc:0, ntTro:3, ucl:[183,140]}
+};
+
+const TROPHIES = [
+  {c:"Dünya Kupası", m:["Dünya Kupası 2022"], r:[]},
+  {c:"Copa América / EURO", m:["Copa América 2021","Copa América 2024"], r:["EURO 2016"]},
+  {c:"Finalissima / Uluslar Ligi", m:["Finalissima 2022"], r:["Uluslar Ligi 2019","Uluslar Ligi 2025"]},
+  {c:"Şampiyonlar Ligi", m:["2006","2009","2011","2015"], r:["2008","2014","2016","2017","2018"]},
+  {c:"Lig şampiyonluğu", n:"Messi: 10 La Liga, 2 Ligue 1, 1 MLS Cup · Ronaldo: 3 Premier Lig, 2 La Liga, 2 Serie A, 1 Suudi Pro Lig",
+    m:["La Liga 2005","La Liga 2006","La Liga 2009","La Liga 2010","La Liga 2011","La Liga 2013","La Liga 2015","La Liga 2016","La Liga 2018","La Liga 2019","Ligue 1 2022","Ligue 1 2023","MLS Cup 2025"],
+    r:["Premier Lig 2007","Premier Lig 2008","Premier Lig 2009","La Liga 2012","La Liga 2017","Serie A 2019","Serie A 2020","Suudi Pro Lig 2026"]},
+  {c:"Yerel kupa", n:"Kral Kupası, FA Cup, Lig Kupası, İtalya Kupası",
+    m:["Kral Kupası 2009","Kral Kupası 2012","Kral Kupası 2015","Kral Kupası 2016","Kral Kupası 2017","Kral Kupası 2018","Kral Kupası 2021"],
+    r:["FA Cup 2004","Lig Kupası 2006","Lig Kupası 2009","Kral Kupası 2011","Kral Kupası 2014","İtalya Kupası 2021"]},
+  {c:"Kulüpler Dünya Kupası", m:["2009","2011","2015"], r:["2008","2014","2016","2017"]},
+  {c:"Süper kupalar ve diğerleri", n:"Süper kupalar, Leagues Cup, Supporters’ Shield, Campeones Cup, Arap Kulüpler Şampiyonası",
+    m:["İspanya Süper Kupası 2006","İspanya Süper Kupası 2009","İspanya Süper Kupası 2010","İspanya Süper Kupası 2011","İspanya Süper Kupası 2013","İspanya Süper Kupası 2016","İspanya Süper Kupası 2018","UEFA Süper Kupası 2009","UEFA Süper Kupası 2011","UEFA Süper Kupası 2015","Fransa Süper Kupası 2022","Leagues Cup 2023","Supporters’ Shield 2024","Campeones Cup 2026"],
+    r:["Portekiz Süper Kupası 2002","Community Shield 2007","İspanya Süper Kupası 2012","İspanya Süper Kupası 2017","UEFA Süper Kupası 2014","UEFA Süper Kupası 2017","İtalya Süper Kupası 2018","İtalya Süper Kupası 2020","Arap Kulüpler Şampiyonası 2023"]}
+];
+const YOUTH = {c:"Gençler ve olimpiyat", n:"A takım toplamına dahil değil", m:["U-20 Dünya Kupası 2005","Olimpiyat altın madalyası 2008"], r:[]};
+
+const BDO = [[2008,"r"],[2009,"m"],[2010,"m"],[2011,"m"],[2012,"m"],[2013,"r"],[2014,"r"],[2015,"m"],[2016,"r"],[2017,"r"],[2018,"x","Modrić"],[2019,"m"],[2020,"none","Verilmedi"],[2021,"m"],[2022,"x","Benzema"],[2023,"m"],[2024,"x","Rodri"],[2025,"x","Dembélé"]];
+
+const AWARDS = [
+  ["Ballon d’Or",8,5],
+  ["FIFA yılın oyuncusu",8,5,"Tüm formatlar: FIFA Dünyada Yılın Oyuncusu, FIFA Ballon d’Or, The Best"],
+  ["Avrupa Altın Ayakkabı",6,4,"Avrupa liglerinin gol kralı"],
+  ["Dünya Kupası Altın Top",2,0,"Turnuvanın en iyi oyuncusu"]
+];
+const AWARDS2 = [
+  ["La Liga gol krallığı",8,3,"Pichichi ödülü"],
+  ["Şampiyonlar Ligi gol krallığı",6,7],
+  ["Laureus Yılın Sporcusu",2,0],
+  ["Lig gol krallığı (Avrupa dışı)",2,2,"Messi: MLS 2025, 2026 · Ronaldo: Suudi Pro Lig 2023-24, 2024-25"]
+];
+
+/* ===================== HELPERS ===================== */
+const nf0 = new Intl.NumberFormat("tr-TR");
+const nf2 = new Intl.NumberFormat("tr-TR",{minimumFractionDigits:2,maximumFractionDigits:2});
+const f0 = n => nf0.format(n);
+const f2 = n => nf2.format(n);
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const add = (a,b) => [a[0]+b[0], a[1]+b[1]];
+const sum = (rows, f) => rows.reduce((acc,r) => add(acc, typeof f === "function" ? f(r) : r[f]), [0,0]);
+
+for (const k of ["messi","ronaldo"]) {
+  const p = P[k];
+  p.rows = p.s.map(([club,label,La,Lg,Ca,Cg,Ka,Kg,Oa,Og,kt]) => {
+    const key = label.indexOf("-") > 0 ? (+label.slice(0,4)) + 1 : (+label) + 0.5;
+    return {club,label,key,age:Math.floor(key - p.born),lg:[La,Lg],cup:[Ca,Cg],cont:[Ka,Kg],oth:[Oa,Og],kt,tot:[La+Ca+Ka+Oa, Lg+Cg+Kg+Og]};
+  });
+  p.nrows = p.n.map(([y,ca,cg,fa,fg]) => ({club:"nt",label:String(y),key:y+0.5,age:Math.floor(y+0.5-p.born),comp:[ca,cg],fr:[fa,fg],tot:[ca+fa,cg+fg]}));
+}
+
+/* one TV-style stat row */
+function statRow(o){
+  const mv = o.lv, rv = o.rv;
+  const total = mv + rv;
+  const pl = total > 0 ? mv/total*100 : 50;
+  const state = (o.neutral || mv === rv) ? "neutral" : (mv > rv ? "win-l" : "win-r");
+  return `<div class="srow ${state}">
+    <span class="v l ${o.cl}">${o.lt}</span>
+    <span class="lbl">${o.label}${o.note ? `<small>${o.note}</small>` : ""}</span>
+    <span class="v rt ${o.cr}">${o.rt}</span>
+    <div class="split" aria-hidden="true"><i class="${o.cl}" style="flex-grow:${pl.toFixed(2)}"></i><i class="${o.cr}" style="flex-grow:${(100-pl).toFixed(2)}"></i></div>
+  </div>`;
+}
+const ap = (txt, approx) => approx ? `<span class="ap">≈</span>${txt}` : txt;
+
+/* ===================== OVERVIEW ===================== */
+function career(k){
+  const p = P[k], e = EXTRA[k];
+  const club = sum(p.rows,"tot"), lg = sum(p.rows,"lg"), nt = sum(p.nrows,"tot");
+  const apps = club[0] + nt[0], goals = club[1] + nt[1];
+  return {e, club, lg, nt, apps, goals, ga: goals + e.ast};
+}
+const OVERVIEW = [
+  {title:"Gol ve asist", rows:[
+    {label:"Resmî maç", f:s=>s.apps, fmt:f0, neutral:true, note:"Kulüp + milli takım"},
+    {label:"Gol", f:s=>s.goals, fmt:f0},
+    {label:"Asist <sup>†</sup>", f:s=>s.e.ast, fmt:f0},
+    {label:"Gol + asist <sup>†</sup>", f:s=>s.ga, fmt:f0},
+    {label:"Milli takımda asist <sup>†</sup>", f:s=>s.e.ntAst, fmt:f0}
+  ]},
+  {title:"Verimlilik", rows:[
+    {label:"Maç başına gol", f:s=>s.goals/s.apps, fmt:f2},
+    {label:"Maç başına gol katkısı <sup>†</sup>", f:s=>s.ga/s.apps, fmt:f2, note:"(Gol + asist) ÷ maç"},
+    {label:"Kulüpte maç başına gol", f:s=>s.club[1]/s.club[0], fmt:f2},
+    {label:"Ligde maç başına gol", f:s=>s.lg[1]/s.lg[0], fmt:f2},
+    {label:"Şampiyonlar Ligi’nde maç başına gol", f:s=>s.e.ucl[1]/s.e.ucl[0], fmt:f2}
+  ]},
+  {title:"Toplam hacim", rows:[
+    {label:"Kulüp golü", f:s=>s.club[1], fmt:f0},
+    {label:"Lig golü", f:s=>s.lg[1], fmt:f0},
+    {label:"Şampiyonlar Ligi golü", f:s=>s.e.ucl[1], fmt:f0, note:"Messi 163, Ronaldo 183 maçta"},
+    {label:"Milli takım golü", f:s=>s.nt[1], fmt:f0},
+    {label:"Milli maç", f:s=>s.nt[0], fmt:f0, neutral:true}
+  ]},
+  {title:"Kupa, ödül ve duran top", rows:[
+    {label:"Kupa (A takım)", f:s=>s.e.tro, fmt:f0},
+    {label:"Ballon d’Or", f:s=>s.e.bdo, fmt:f0},
+    {label:"Dünya Kupası", f:s=>s.e.wc, fmt:f0},
+    {label:"Serbest vuruş golü", f:s=>s.e.fk, fmt:f0, approx:true},
+    {label:"Hat-trick", f:s=>s.e.ht, fmt:f0, approxL:true}
+  ]}
+];
+function renderOverview(){
+  const M = career("messi"), R = career("ronaldo");
+  let lead = {m:0, r:0}, html = "";
+  for (const g of OVERVIEW) {
+    let rows = "";
+    for (const row of g.rows) {
+      const lv = row.f(M), rv = row.f(R);
+      if (!row.neutral && lv !== rv) lv > rv ? lead.m++ : lead.r++;
+      rows += statRow({label:row.label, note:row.note, lv, rv,
+        lt: ap(row.fmt(lv), row.approx || row.approxL), rt: ap(row.fmt(rv), row.approx),
+        cl:"c-m", cr:"c-r", neutral:row.neutral});
+    }
+    html += `<div class="panel"><div class="ph"><h3>${g.title}</h3><div class="names"><span>Messi</span><span>Ronaldo</span></div></div>${rows}</div>`;
+  }
+  $("overview").innerHTML = html;
+  $("tally").innerHTML = `
+    <div class="side-l c-m"><span class="n">${lead.m}</span><span class="who">kategoride<br>Messi önde</span></div>
+    <div class="mid">20 kategori · maç sayıları gibi 2 tanesi yalnızca bilgi için</div>
+    <div class="side-r c-r"><span class="who">kategoride<br>Ronaldo önde</span><span class="n">${lead.r}</span></div>`;
+}
+
+/* ===================== AGE CHART ===================== */
+let ageMode = "all", ageSel = 30;
+function cum(k, withNt){
+  const p = P[k];
+  const maxAge = Math.max(...p.rows.map(r => r.age));
+  const out = [];
+  for (let a = 17; a <= maxAge; a++) {
+    let g = 0;
+    p.rows.forEach(r => { if (r.age <= a) g += r.tot[1]; });
+    if (withNt) p.nrows.forEach(r => { if (r.age <= a) g += r.tot[1]; });
+    out.push({a, g});
+  }
+  return out;
+}
+let AGE = null;
+function drawAge(){
+  const withNt = ageMode === "all";
+  const M = cum("messi", withNt), R = cum("ronaldo", withNt);
+  const host = $("ageChart");
+  const W = Math.max(320, Math.round(host.clientWidth || 760));
+  const narrow = W < 560;
+  const H = narrow ? 300 : 380;
+  const ml = narrow ? 40 : 52, mr = narrow ? 88 : 120, mt = 30, mb = 34;
+  const x0 = 17, x1 = 41;
+  const ymax = Math.ceil(Math.max(...M.map(d=>d.g), ...R.map(d=>d.g)) / 200) * 200;
+  const X = a => ml + (a - x0) / (x1 - x0) * (W - ml - mr);
+  const Y = g => mt + (1 - g / ymax) * (H - mt - mb);
+  let s = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Yaşa göre toplam gol: Messi ve Ronaldo">`;
+  s += `<g class="grid">`;
+  for (let g = 0; g <= ymax; g += 200) s += `<line x1="${ml}" x2="${W-mr}" y1="${Y(g).toFixed(1)}" y2="${Y(g).toFixed(1)}"/><text x="${ml-8}" y="${(Y(g)+4).toFixed(1)}" text-anchor="end">${f0(g)}</text>`;
+  s += `</g><g>`;
+  const step = narrow ? 4 : 2;
+  for (let a = 17; a <= 41; a += step) s += `<text x="${X(a).toFixed(1)}" y="${H-10}" text-anchor="middle">${a}</text>`;
+  s += `<text x="${W-mr+10}" y="${H-10}">yaş</text><text x="${ml-8}" y="14" text-anchor="start">toplam gol</text></g>`;
+  /* Messi lead band where Messi is ahead */
+  const band = [];
+  M.forEach(d => { const r = R.find(x => x.a === d.a); if (r && d.g > r.g) band.push([d.a, d.g, r.g]); });
+  if (band.length > 1) {
+    let pth = band.map((b,i) => `${i?"L":"M"}${X(b[0]).toFixed(1)},${Y(b[1]).toFixed(1)}`).join("");
+    pth += band.slice().reverse().map(b => `L${X(b[0]).toFixed(1)},${Y(b[2]).toFixed(1)}`).join("") + "Z";
+    s += `<path class="lead-band" d="${pth}"/>`;
+  }
+  const path = d => d.map((p,i) => `${i?"L":"M"}${X(p.a).toFixed(1)},${Y(p.g).toFixed(1)}`).join("");
+  s += `<path class="ln r" d="${path(R)}"/><path class="ln m" d="${path(M)}"/>`;
+  const mL = M[M.length-1], rL = R[R.length-1];
+  s += `<text class="end m" x="${(X(mL.a)-6).toFixed(1)}" y="${(Y(mL.g)-16).toFixed(1)}" text-anchor="end">Messi ${f0(mL.g)}</text>`;
+  s += `<text class="end r" x="${(X(rL.a)+10).toFixed(1)}" y="${(Y(rL.g)+5).toFixed(1)}">Ronaldo ${f0(rL.g)}</text>`;
+  s += `<g id="ageGuide"></g><rect class="hit" x="${ml}" y="${mt-10}" width="${W-ml-mr}" height="${H-mt-mb+10}"/></svg>`;
+  host.innerHTML = s;
+  AGE = {M, R, X, Y, W, ml, mr, mt, mb, H, x0, x1};
+  const svg = host.querySelector("svg");
+  const hit = host.querySelector(".hit");
+  const pick = ev => {
+    const rect = svg.getBoundingClientRect();
+    const x = (ev.clientX - rect.left) / rect.width * W;
+    const a = Math.round(x0 + (x - ml) / (W - ml - mr) * (x1 - x0));
+    setAge(Math.min(41, Math.max(17, a)));
+  };
+  hit.addEventListener("pointermove", pick);
+  hit.addEventListener("pointerdown", pick);
+  setAge(ageSel);
+  /* verdict */
+  const mMax = mL.a;
+  let a0 = null;
+  for (let a = mMax; a >= 17; a--) {
+    const m = M.find(d => d.a === a).g, r = R.find(d => d.a === a).g;
+    if (m > r) a0 = a; else break;
+  }
+  const mm = M.find(d=>d.a===mMax).g, rr = R.find(d=>d.a===mMax).g;
+  $("ageVerdict").innerHTML = a0 !== null
+    ? `Messi, <b>${a0} yaşından bu yana ulaştığı her yaşta</b> Ronaldo’dan daha fazla gole sahip. ${mMax} yaşında: Messi ${f0(mm)}, Ronaldo ${f0(rr)}. Ronaldo’nun toplamda önde olmasının tek nedeni, Messi’nin henüz ${mMax+1} ve ${mMax+2} yaşlarını oynamamış olması.`
+    : `Bu görünümde Messi her yaşta önde değil.`;
+}
+function setAge(a){
+  ageSel = a;
+  const {M, R, X, Y, mt, H, mb} = AGE;
+  const m = M.find(d => d.a === a), r = R.find(d => d.a === a);
+  let g = `<line class="guide" x1="${X(a).toFixed(1)}" x2="${X(a).toFixed(1)}" y1="${mt-6}" y2="${H-mb}"/>`;
+  if (r) g += `<circle class="gd r" cx="${X(a).toFixed(1)}" cy="${Y(r.g).toFixed(1)}" r="6"/>`;
+  if (m) g += `<circle class="gd m" cx="${X(a).toFixed(1)}" cy="${Y(m.g).toFixed(1)}" r="6"/>`;
+  $("ageGuide").innerHTML = g;
+  let diff = "";
+  if (m && r) diff = m.g === r.g ? "Eşit" : (m.g > r.g ? `Messi +${f0(m.g-r.g)}` : `Ronaldo +${f0(r.g-m.g)}`);
+  else if (!m) diff = "Messi bu yaşa henüz gelmedi";
+  $("ageRead").innerHTML = `<span class="ra">${a} yaş</span><span class="c-m">Messi <b>${m ? f0(m.g) : "—"}</b></span><span class="c-r">Ronaldo <b>${r ? f0(r.g) : "—"}</b></span><span class="diff">${diff}</span>`;
+}
+$("ageChart").addEventListener("keydown", e => {
+  if (e.key === "ArrowLeft") { setAge(Math.max(17, ageSel-1)); e.preventDefault(); }
+  if (e.key === "ArrowRight") { setAge(Math.min(41, ageSel+1)); e.preventDefault(); }
+});
+function setAgeMode(mode){
+  ageMode = mode;
+  $("ageAll").setAttribute("aria-pressed", String(mode === "all"));
+  $("ageClub").setAttribute("aria-pressed", String(mode === "club"));
+  drawAge();
+}
+$("ageAll").addEventListener("click", () => setAgeMode("all"));
+$("ageClub").addEventListener("click", () => setAgeMode("club"));
+
+/* ===================== COMPARATOR ===================== */
+const COMP_CLUB = [["all","Tüm maçlar"],["lg","Lig"],["cup","Yerel kupalar"],["cont","Kıtasal kupalar"],["ucl","Sadece Şampiyonlar Ligi"],["oth","Diğer (süper kupa, KDK, play-off…)"]];
+const COMP_NT = [["all","Tüm maçlar"],["comp","Resmî maçlar"],["fr","Hazırlık maçları"]];
+const KT = {ucl:"Şampiyonlar Ligi", uel:"Avrupa Ligi", afc:"AFC Şampiyonlar Ligi", ccc:"CONCACAF Şampiyonlar Kupası", uefa:"ŞL ön eleme / UEFA Kupası"};
+
+const teamOpts = k => [["all","Tüm kulüpler"], ...Object.entries(P[k].clubs), ["nt", P[k].nt + " (milli takım)"]];
+const teamName = (k,t) => t === "all" ? "Tüm kulüpler" : t === "nt" ? P[k].nt : P[k].clubs[t];
+function seasonList(k, team){
+  const p = P[k];
+  const src = team === "nt" ? p.nrows : p.rows.filter(r => team === "all" || r.club === team);
+  const map = new Map();
+  src.forEach(r => {
+    if (!map.has(r.label)) map.set(r.label, {label:r.label, key:r.key, age:r.age, clubs:[]});
+    const nm = team === "nt" ? p.nt : p.short[r.club];
+    const e = map.get(r.label);
+    if (!e.clubs.includes(nm)) e.clubs.push(nm);
+  });
+  return [...map.values()].sort((a,b) => a.key - b.key);
+}
+function pickVal(r, comp){
+  switch (comp) {
+    case "lg": return r.lg;
+    case "cup": return r.cup;
+    case "cont": return r.cont;
+    case "ucl": return r.kt === "ucl" ? r.cont : [0,0];
+    case "oth": return r.oth;
+    case "comp": return r.comp;
+    case "fr": return r.fr;
+    default: return r.tot;
+  }
+}
+const state = [
+  {p:"messi", team:"psg", from:0, to:1, comp:"all"},
+  {p:"ronaldo", team:"juv", from:0, to:3, comp:"all"}
+];
+let activePreset = "psgjuv";
+const PRESETS = [
+  {id:"psgjuv", t:"PSG Messi – Juventus Ronaldo", sides:[{p:"messi",team:"psg"},{p:"ronaldo",team:"juv"}]},
+  {id:"clasico", t:"Barcelona – Real Madrid (aynı 9 sezon)", sides:[{p:"messi",team:"bar",labels:["2009-10","2017-18"]},{p:"ronaldo",team:"rma"}]},
+  {id:"kariyer", t:"Tüm kulüp kariyeri", sides:[{p:"messi",team:"all"},{p:"ronaldo",team:"all"}]},
+  {id:"ucl", t:"Sadece Şampiyonlar Ligi", sides:[{p:"messi",team:"all",comp:"ucl"},{p:"ronaldo",team:"all",comp:"ucl"}]},
+  {id:"lig", t:"Sadece lig maçları", sides:[{p:"messi",team:"all",comp:"lg"},{p:"ronaldo",team:"all",comp:"lg"}]},
+  {id:"yas1", t:"Aynı yaşta: 24–30", sides:[{p:"messi",team:"all",ages:[24,30]},{p:"ronaldo",team:"all",ages:[24,30]}]},
+  {id:"yas2", t:"Aynı yaşta: 35–39", sides:[{p:"messi",team:"all",ages:[35,39]},{p:"ronaldo",team:"all",ages:[35,39]}]},
+  {id:"post", t:"Avrupa sonrası: Inter Miami – Al-Nassr", sides:[{p:"messi",team:"mia"},{p:"ronaldo",team:"nas"}]},
+  {id:"milli", t:"Milli takım: resmî maçlar", sides:[{p:"messi",team:"nt",comp:"comp"},{p:"ronaldo",team:"nt",comp:"comp"}]},
+  {id:"messi2", t:"Messi’ye karşı Messi: Barça – Miami", sides:[{p:"messi",team:"bar"},{p:"messi",team:"mia"}]}
+];
+function applyPreset(id){
+  const pr = PRESETS.find(x => x.id === id);
+  pr.sides.forEach((d,i) => {
+    const s = state[i];
+    s.p = d.p; s.team = d.team; s.comp = d.comp || "all";
+    const L = seasonList(s.p, s.team);
+    let f = 0, t = L.length - 1;
+    if (d.ages) {
+      f = L.findIndex(x => x.age >= d.ages[0]);
+      t = L.map(x => x.age <= d.ages[1]).lastIndexOf(true);
+    }
+    if (d.labels) {
+      f = L.findIndex(x => x.label === d.labels[0]);
+      t = L.findIndex(x => x.label === d.labels[1]);
+    }
+    s.from = Math.max(0, f); s.to = Math.max(s.from, t);
+  });
+  activePreset = id;
+  fillSide(0); fillSide(1); renderCompare(); renderPresets();
+}
+function renderPresets(){
+  $("presets").innerHTML = PRESETS.map(p => `<button type="button" class="chip" data-id="${p.id}" aria-pressed="${p.id === activePreset}">${esc(p.t)}</button>`).join("");
+}
+$("presets").addEventListener("click", e => {
+  const b = e.target.closest(".chip");
+  if (b) applyPreset(b.dataset.id);
+});
+const sideColor = i => (i === 1 && state[0].p === state[1].p) ? "c-n" : (state[i].p === "messi" ? "c-m" : "c-r");
+function fillSide(i){
+  const s = state[i];
+  const g = id => $(`s${i}-${id}`);
+  g("player").value = s.p;
+  g("team").innerHTML = teamOpts(s.p).map(([v,t]) => `<option value="${v}">${esc(t)}</option>`).join("");
+  g("team").value = s.team;
+  const L = seasonList(s.p, s.team);
+  const opts = L.map((x,j) => `<option value="${j}">${x.label} · ${s.team === "all" ? esc(x.clubs.join("/")) + " · " : ""}${x.age} yaş</option>`).join("");
+  g("from").innerHTML = opts; g("to").innerHTML = opts;
+  g("from").value = String(s.from); g("to").value = String(s.to);
+  const C = s.team === "nt" ? COMP_NT : COMP_CLUB;
+  g("comp").innerHTML = C.map(([v,t]) => `<option value="${v}">${esc(t)}</option>`).join("");
+  g("comp").value = s.comp;
+  g("name").textContent = P[s.p].name;
+  $("side"+i).className = "panel side " + sideColor(i);
+  if (i === 0) $("side1").className = "panel side " + sideColor(1);
+}
+function bindSide(i){
+  const s = state[i];
+  const g = id => $(`s${i}-${id}`);
+  const changed = () => { activePreset = null; renderPresets(); };
+  g("player").addEventListener("change", e => {
+    s.p = e.target.value; s.team = "all"; s.comp = "all"; s.from = 0; s.to = seasonList(s.p,"all").length - 1;
+    changed(); fillSide(0); fillSide(1); renderCompare();
+  });
+  g("team").addEventListener("change", e => {
+    s.team = e.target.value; s.from = 0; s.to = seasonList(s.p, s.team).length - 1;
+    const C = s.team === "nt" ? COMP_NT : COMP_CLUB;
+    if (!C.some(c => c[0] === s.comp)) s.comp = "all";
+    changed(); fillSide(i); renderCompare();
+  });
+  g("from").addEventListener("change", e => {
+    s.from = +e.target.value; if (s.from > s.to) s.to = s.from;
+    changed(); fillSide(i); renderCompare();
+  });
+  g("to").addEventListener("change", e => {
+    s.to = +e.target.value; if (s.to < s.from) s.from = s.to;
+    changed(); fillSide(i); renderCompare();
+  });
+  g("comp").addEventListener("change", e => { s.comp = e.target.value; changed(); renderCompare(); });
+}
+function selRows(s){
+  const p = P[s.p];
+  const L = seasonList(s.p, s.team).slice(s.from, s.to + 1);
+  const src = s.team === "nt" ? p.nrows : p.rows.filter(r => s.team === "all" || r.club === s.team);
+  return L.map(x => {
+    const rs = src.filter(r => r.label === x.label);
+    const v = sum(rs, r => pickVal(r, s.comp));
+    return {label:x.label, age:x.age, clubs:x.clubs, a:v[0], g:v[1]};
+  });
+}
+function metrics(rows){
+  const t = rows.reduce((acc,r) => [acc[0]+r.a, acc[1]+r.g], [0,0]);
+  const played = rows.filter(r => r.a > 0);
+  const best = played.reduce((b,r) => (!b || r.g > b.g) ? r : b, null);
+  return {a:t[0], g:t[1], gpg: t[0] ? t[1]/t[0] : 0, n:played.length, gps: played.length ? t[1]/played.length : 0, best,
+    forty: played.filter(r => r.g >= 40).length, ten: played.filter(r => r.g >= 10).length};
+}
+function descr(s){
+  const L = seasonList(s.p, s.team);
+  const C = (s.team === "nt" ? COMP_NT : COMP_CLUB).find(c => c[0] === s.comp)[1];
+  const span = s.from === s.to ? L[s.from].label : `${L[s.from].label} → ${L[s.to].label}`;
+  return `${teamName(s.p, s.team)} · ${span} · ${C}`;
+}
+const shortName = s => {
+  const t = s.team === "all" ? "kulüpler" : s.team === "nt" ? P[s.p].nt : (P[s.p].short[s.team] || P[s.p].clubs[s.team]);
+  return `${P[s.p].name} (${t})`;
+};
+function renderCompare(){
+  const [s0, s1] = state;
+  const r0 = selRows(s0), r1 = selRows(s1);
+  const m0 = metrics(r0), m1 = metrics(r1);
+  const c0 = sideColor(0), c1 = sideColor(1);
+  $("resHead").innerHTML = `<div class="${c0}"><strong>${P[s0.p].name}</strong><span>${esc(descr(s0))}</span></div><div class="${c1}"><strong>${P[s1.p].name}</strong><span>${esc(descr(s1))}</span></div>`;
+  const nt0 = s0.team === "nt", nt1 = s1.team === "nt";
+  const unit = (nt0 && nt1) ? "Yıl" : (nt0 || nt1) ? "Sezon / yıl" : "Sezon";
+  const bestTxt = m => m.best ? `${f0(m.best.g)}<em>${m.best.label}</em>` : "—";
+  let rows = "";
+  rows += statRow({label:`${unit} sayısı`, lv:m0.n, rv:m1.n, lt:f0(m0.n), rt:f0(m1.n), cl:c0, cr:c1, neutral:true});
+  rows += statRow({label:"Maç", lv:m0.a, rv:m1.a, lt:f0(m0.a), rt:f0(m1.a), cl:c0, cr:c1, neutral:true});
+  rows += statRow({label:"Gol", lv:m0.g, rv:m1.g, lt:f0(m0.g), rt:f0(m1.g), cl:c0, cr:c1});
+  rows += statRow({label:"Maç başına gol", lv:+m0.gpg.toFixed(4), rv:+m1.gpg.toFixed(4), lt:f2(m0.gpg), rt:f2(m1.gpg), cl:c0, cr:c1});
+  rows += statRow({label:`${unit} başına gol`, lv:+m0.gps.toFixed(4), rv:+m1.gps.toFixed(4), lt:m0.n ? f2(m0.gps) : "—", rt:m1.n ? f2(m1.gps) : "—", cl:c0, cr:c1});
+  rows += statRow({label:`En golcü ${unit.toLowerCase()}`, lv:m0.best ? m0.best.g : 0, rv:m1.best ? m1.best.g : 0, lt:bestTxt(m0), rt:bestTxt(m1), cl:c0, cr:c1});
+  if (!nt0 && !nt1) rows += statRow({label:"40+ gollü sezon", lv:m0.forty, rv:m1.forty, lt:f0(m0.forty), rt:f0(m1.forty), cl:c0, cr:c1});
+  if (nt0 && nt1) rows += statRow({label:"10+ gollü yıl", lv:m0.ten, rv:m1.ten, lt:f0(m0.ten), rt:f0(m1.ten), cl:c0, cr:c1});
+  $("resRows").innerHTML = rows;
+
+  /* verdict */
+  const n0 = shortName(s0), n1 = shortName(s1);
+  let v;
+  if (!m0.a || !m1.a) v = "Bu seçimde taraflardan birinin maçı yok. Turnuva ya da sezon aralığını değiştir.";
+  else {
+    const g0 = +m0.gpg.toFixed(4), g1 = +m1.gpg.toFixed(4);
+    const goalLine = m0.g === m1.g ? `İkisi de ${f0(m0.g)} gol attı.` : `Toplam golde ${m0.g > m1.g ? n0 : n1} önde (${f0(Math.max(m0.g,m1.g))} – ${f0(Math.min(m0.g,m1.g))}).`;
+    const rateLine = g0 === g1 ? `Maç başına gol oranları eşit (${f2(m0.gpg)}).`
+      : `Maç başına golde ${g0 > g1 ? n0 : n1} önde: ${f2(Math.max(m0.gpg,m1.gpg))} – ${f2(Math.min(m0.gpg,m1.gpg))}.`;
+    v = `${goalLine} ${rateLine}`;
+  }
+  $("verdict").textContent = v;
+
+  /* notes */
+  const notes = [];
+  if (s0.comp === "ucl" || s1.comp === "ucl") notes.push("Wikipedia tablosu Şampiyonlar Ligi ön eleme maçlarını da sayar. UEFA’nın resmî sayımı: Messi 163 maçta 129 gol, Ronaldo 183 maçta 140 gol.");
+  if (s0.comp === "cont" || s1.comp === "cont") notes.push("Kıtasal kupalar: Avrupa’da Şampiyonlar Ligi ve Avrupa Ligi, Inter Miami’de CONCACAF Şampiyonlar Kupası, Al-Nassr’da AFC Şampiyonlar Ligi.");
+  if (s0.comp === "oth" || s1.comp === "oth") notes.push("Diğer: süper kupalar, Kulüpler Dünya Kupası, Leagues Cup, MLS play-off’ları ve Arap Kulüpler Şampiyonası.");
+  if ((s0.team === "all" || s0.team === "mu") && s0.p === "ronaldo" || (s1.team === "all" || s1.team === "mu") && s1.p === "ronaldo") notes.push("Ronaldo 2021-22’de bir maç Juventus’ta oynayıp Manchester United’a döndü; 2022-23’te de sezon ortasında Al-Nassr’a geçti. Bu sezonlarda iki kulübün sayıları toplanır.");
+  notes.push("Asistler bu araçta yok, çünkü sezon bazında asist sayıları kaynaktan kaynağa değişiyor. Kariyer asistleri Özet bölümünde.");
+  $("resNote").innerHTML = notes.map(n => `<p class="note">${esc(n)}</p>`).join("");
+
+  /* bars */
+  const max = Math.max(1, ...r0.map(r=>r.g), ...r1.map(r=>r.g));
+  const panel = (i, s, rows, c) => {
+    const show = rows.length <= 14;
+    const bars = rows.map((r,j) => `<button type="button" class="bar" data-side="${i}" data-j="${j}" aria-label="${r.label}: ${r.a} maç, ${r.g} gol">${show ? `<b>${r.g}</b>` : ""}<i style="height:${(r.g/max*100).toFixed(1)}%"></i></button>`).join("");
+    return `<div class="panel barpanel ${c}"><h3><span>${P[s.p].name}</span><small class="note" style="margin:0">${s.team === "nt" ? "Yıl yıl gol" : "Sezon sezon gol"}</small></h3>
+      <div class="bars" data-side="${i}">${bars}</div>
+      <div class="bar-axis"><span>${rows.length ? rows[0].label : ""}</span><span>${rows.length > 1 ? rows[rows.length-1].label : ""}</span></div>
+      <p class="bar-read" id="read${i}"></p></div>`;
+  };
+  $("barsGrid").innerHTML = panel(0, s0, r0, c0) + panel(1, s1, r1, c1);
+  [[0,r0,m0],[1,r1,m1]].forEach(([i,rows,m]) => {
+    const j = m.best ? rows.indexOf(m.best) : (rows.length ? 0 : -1);
+    if (j >= 0) selectBar(i, j, rows);
+  });
+  $("barsGrid").onclick = e => {
+    const b = e.target.closest(".bar");
+    if (!b) return;
+    const i = +b.dataset.side;
+    selectBar(i, +b.dataset.j, i === 0 ? r0 : r1);
+  };
+  $("barsGrid").onfocusin = e => {
+    const b = e.target.closest(".bar");
+    if (!b) return;
+    const i = +b.dataset.side;
+    selectBar(i, +b.dataset.j, i === 0 ? r0 : r1);
+  };
+
+  /* tables */
+  const tbl = (s, rows, c) => {
+    const nt = s.team === "nt";
+    let h = `<div class="${c}"><h4>${P[s.p].name} · ${esc(teamName(s.p, s.team))}</h4><div class="tbl-wrap"><table><thead><tr><th>${nt ? "Yıl" : "Sezon"}</th><th>Takım</th><th>Yaş</th><th>Maç</th><th>Gol</th><th>Oran</th></tr></thead><tbody>`;
+    rows.forEach(r => { h += `<tr><td>${r.label}</td><td>${esc(r.clubs.join(" / "))}</td><td>${r.age}</td><td>${r.a}</td><td>${r.g}</td><td>${r.a ? f2(r.g/r.a) : "—"}</td></tr>`; });
+    const m = metrics(rows);
+    h += `</tbody><tfoot><tr><td colspan="3">Toplam</td><td>${f0(m.a)}</td><td>${f0(m.g)}</td><td>${m.a ? f2(m.gpg) : "—"}</td></tr></tfoot></table></div></div>`;
+    return h;
+  };
+  $("tbls").innerHTML = tbl(s0, r0, c0) + tbl(s1, r1, c1);
+}
+function selectBar(i, j, rows){
+  const wrap = document.querySelector(`.bars[data-side="${i}"]`);
+  if (!wrap) return;
+  wrap.querySelectorAll(".bar").forEach((b,k) => b.setAttribute("aria-pressed", String(k === j)));
+  const r = rows[j];
+  $("read"+i).textContent = r ? `${r.label} · ${r.clubs.join(" / ")} · ${r.age} yaş — ${r.a} maç, ${r.g} gol` : "";
+}
+
+/* ===================== TROPHIES ===================== */
+function renderTrophies(){
+  const pips = n => `<span class="pips" aria-hidden="true">${'<i class="pip"></i>'.repeat(n)}</span>`;
+  const cell = (n, c) => `<div class="cab-cell ${c}${n ? "" : " zero"}"><span class="cnt">${n}</span>${pips(n)}</div>`;
+  let h = `<div class="cab-row head"><span class="cat"></span><span class="c-m" style="color:var(--messi-ink)">Messi</span><span class="c-r" style="color:var(--ronaldo-ink)">Ronaldo</span></div>`;
+  let tm = 0, tr = 0;
+  TROPHIES.forEach(t => {
+    tm += t.m.length; tr += t.r.length;
+    h += `<div class="cab-row"><div class="cat">${t.c}${t.n ? `<small>${t.n}</small>` : ""}</div>${cell(t.m.length,"c-m")}${cell(t.r.length,"c-r")}</div>`;
+  });
+  h += `<div class="cab-row total"><div class="cat">Toplam (A takım)</div><div class="cab-cell c-m"><span class="cnt">${tm}</span></div><div class="cab-cell c-r"><span class="cnt">${tr}</span></div></div>`;
+  h += `<div class="cab-row youth"><div class="cat">${YOUTH.c}<small>${YOUTH.n}</small></div>${cell(YOUTH.m.length,"c-m")}${cell(YOUTH.r.length,"c-r")}</div>`;
+  $("cabinet").innerHTML = h;
+  const list = (k, c) => `<dl class="${c}"><dt style="margin-top:0;font-size:15px">${k === "m" ? "Messi" : "Ronaldo"}</dt>${[...TROPHIES, YOUTH].filter(t => t[k].length).map(t => `<dt>${t.c} (${t[k].length})</dt><dd>${t[k].join(", ")}</dd>`).join("")}</dl>`;
+  $("troList").innerHTML = list("m","c-m") + list("r","c-r");
+}
+
+/* ===================== AWARDS ===================== */
+function renderAwards(){
+  $("bdo").innerHTML = BDO.map(([y,w,nm]) => {
+    const name = w === "m" ? "Messi" : w === "r" ? "Ronaldo" : nm;
+    return `<div class="${w}" title="${y}: ${name}"><b>${y}</b><span>${name}</span></div>`;
+  }).join("");
+  const block = (title, arr) => `<div class="ph"><h3>${title}</h3><div class="names"><span>Messi</span><span>Ronaldo</span></div></div>` +
+    arr.map(([l,m,r,n]) => statRow({label:l, note:n, lv:m, rv:r, lt:f0(m), rt:f0(r), cl:"c-m", cr:"c-r"})).join("");
+  $("awards").innerHTML = block("Dünyanın en iyisi", AWARDS);
+  $("awards2").innerHTML = block("Gol krallıkları ve diğerleri", AWARDS2);
+}
+
+/* ===================== NATIONAL TEAM ===================== */
+function renderNt(){
+  const M = sum(P.messi.nrows,"tot"), R = sum(P.ronaldo.nrows,"tot");
+  const Mc = sum(P.messi.nrows,"comp"), Rc = sum(P.ronaldo.nrows,"comp");
+  const eM = EXTRA.messi, eR = EXTRA.ronaldo;
+  const rows = [
+    {label:"Maç", lv:M[0], rv:R[0], neutral:true},
+    {label:"Gol", lv:M[1], rv:R[1]},
+    {label:"Asist <sup>†</sup>", lv:eM.ntAst, rv:eR.ntAst},
+    {label:"Maç başına gol", lv:M[1]/M[0], rv:R[1]/R[0], d:true},
+    {label:"Maç başına gol katkısı <sup>†</sup>", lv:(M[1]+eM.ntAst)/M[0], rv:(R[1]+eR.ntAst)/R[0], d:true},
+    {label:"Resmî maçta gol", lv:Mc[1], rv:Rc[1], note:`Messi ${Mc[0]}, Ronaldo ${Rc[0]} resmî maçta`},
+    {label:"Büyük kupa", lv:eM.ntTro, rv:eR.ntTro, note:"Dünya Kupası, kıta şampiyonası, Finalissima, Uluslar Ligi"}
+  ];
+  $("ntRows").innerHTML = `<div class="ph"><h3>Milli kariyer</h3><div class="names"><span>Messi</span><span>Ronaldo</span></div></div>` +
+    rows.map(o => statRow({label:o.label, note:o.note, lv:o.lv, rv:o.rv, lt:o.d ? f2(o.lv) : f0(o.lv), rt:o.d ? f2(o.rv) : f0(o.rv), cl:"c-m", cr:"c-r", neutral:o.neutral})).join("");
+}
+
+/* ===================== BOOT ===================== */
+renderOverview();
+renderTrophies();
+renderAwards();
+renderNt();
+[0,1].forEach(bindSide);
+applyPreset("psgjuv");
+drawAge();
+let rw = 0;
+const ro = new ResizeObserver(entries => {
+  const w = Math.round(entries[0].contentRect.width);
+  if (w && Math.abs(w - rw) > 4) { rw = w; drawAge(); }
+});
+ro.observe($("ageChart"));
+})();
+</script>
+</body>
+</html>
